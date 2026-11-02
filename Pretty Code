@@ -1,0 +1,268 @@
+
+import random
+import matplotlib.pyplot as plt
+
+# --------------------------------
+# 1. CREATE THE DECK
+# --------------------------------
+
+ranks = ["2", "3", "4", "5", "6", "7", "8", "9", "10",
+         "Jack", "Queen", "King", "Ace"]
+
+suits = ["♠", "♡", "♢", "♣"]
+
+deck = []
+
+for suit in suits:
+    for rank in ranks:
+        deck.append(rank + " " + suit)
+
+random.shuffle(deck)
+
+player_cards = deck[:26]
+computer_cards = deck[26:]
+
+
+# --------------------------------
+# 2. CREATE GAME VARIABLES
+# --------------------------------
+
+player_wins = 0
+computer_wins = 0
+round_number = 0
+game_draw = False
+
+# Record the number of cards after each round
+player_history = [len(player_cards)]
+computer_history = [len(computer_cards)]
+
+
+# --------------------------------
+# 3. COMPARE CARD VALUES
+# --------------------------------
+
+def compare_cards(card1, card2):
+
+    value1 = ranks.index(card1.split()[0])
+    value2 = ranks.index(card2.split()[0])
+
+    if value1 > value2:
+        return "player"
+
+    elif value2 > value1:
+        return "computer"
+
+    else:
+        return "tie"
+
+
+# --------------------------------
+# 4. HANDLE WAR TIES
+# --------------------------------
+
+def play_war(player_cards, computer_cards, war_pile):
+
+    print("\n!!! WAR !!!")
+
+    while True:
+
+        # Check if both players can complete a War
+        if len(player_cards) < 4 and len(computer_cards) < 4:
+
+            print("Neither player has enough cards to continue War.")
+
+            return "tie"
+
+        elif len(player_cards) < 4:
+
+            print("Player does not have enough cards for War!")
+
+            while len(player_cards) > 0:
+                war_pile.append(player_cards.pop(0))
+
+            return "computer"
+
+        elif len(computer_cards) < 4:
+
+            print("Computer does not have enough cards for War!")
+
+            while len(computer_cards) > 0:
+                war_pile.append(computer_cards.pop(0))
+
+            return "player"
+
+        # Each player puts down 3 face-down cards
+        for i in range(3):
+            war_pile.append(player_cards.pop(0))
+            war_pile.append(computer_cards.pop(0))
+
+        # Each player puts down one face-up card
+        player_card = player_cards.pop(0)
+        computer_card = computer_cards.pop(0)
+
+        war_pile.append(player_card)
+        war_pile.append(computer_card)
+
+        print("Player plays:", player_card)
+        print("Computer plays:", computer_card)
+
+        winner = compare_cards(player_card, computer_card)
+
+        if winner == "player":
+            return "player"
+
+        elif winner == "computer":
+            return "computer"
+
+        else:
+            print("Another tie! WAR AGAIN!")
+
+
+# --------------------------------
+# 5. PLAY ONE ROUND
+# --------------------------------
+
+def play_round(player_cards, computer_cards):
+
+    # Draw one card from each player
+    player_card = player_cards.pop(0)
+    computer_card = computer_cards.pop(0)
+
+    print("\nPlayer:", player_card)
+    print("Computer:", computer_card)
+
+    # Put both cards into a pile
+    war_pile = [player_card, computer_card]
+
+    winner = compare_cards(player_card, computer_card)
+
+    # If the cards tie, play War
+    if winner == "tie":
+
+        winner = play_war(player_cards, computer_cards, war_pile)
+
+    # Give all cards to the winner
+    if winner == "player":
+
+        player_cards.extend(war_pile)
+        print("\nPlayer wins the round!")
+
+    elif winner == "computer":
+
+        computer_cards.extend(war_pile)
+        print("\nComputer wins the round!")
+
+    else:
+
+        print("\nThe game ended in a draw!")
+        return "tie"
+
+    return winner
+
+# --------------------------------
+# 6. MAIN GAME LOOP
+# --------------------------------
+
+print("================================")
+print("          WELCOME TO WAR!")
+print("================================")
+
+playing = "y"
+max_rounds = 50
+
+while (playing == "y" and
+       len(player_cards) > 0 and
+       len(computer_cards) > 0 and
+       round_number < max_rounds):
+
+    playing = input("\nPress Y to play the next round: ").lower()
+
+    if playing == "y":
+
+        round_number = round_number + 1
+
+        print("\n---------- ROUND", round_number, "----------")
+
+        winner = play_round(player_cards, computer_cards)
+
+        if winner == "player":
+            player_wins = player_wins + 1
+
+        elif winner == "computer":
+            computer_wins = computer_wins + 1
+
+        elif winner == "tie":
+            game_draw = True
+            break
+
+        player_history.append(len(player_cards))
+        computer_history.append(len(computer_cards))
+
+        print("\n---------- SCORE ----------")
+        print("Player round wins:", player_wins)
+        print("Computer round wins:", computer_wins)
+
+        print("\nPlayer cards:", len(player_cards))
+        print("Computer cards:", len(computer_cards))
+        print("Total cards:", len(player_cards) + len(computer_cards))
+
+
+# --------------------------------
+# 7. END GAME RESULTS
+# --------------------------------
+
+print("\n================================")
+print("           GAME OVER")
+print("================================")
+
+if game_draw:
+    print("THE GAME ENDED IN A DRAW!")
+
+elif len(player_cards) == 52:
+    print("CONGRATULATIONS! YOU WON!")
+
+elif len(computer_cards) == 52:
+    print("THE COMPUTER WON!")
+
+elif round_number >= max_rounds:
+
+    print("50 ROUND LIMIT REACHED!")
+
+    if len(player_cards) > len(computer_cards):
+        print("YOU WIN BY HAVING MORE CARDS!")
+
+    elif len(computer_cards) > len(player_cards):
+        print("THE COMPUTER WINS BY HAVING MORE CARDS!")
+
+    else:
+        print("THE GAME ENDED IN A TIE!")
+
+else:
+    print("The game was stopped early.")
+
+print("\nFinal Statistics:")
+print("Total rounds played:", round_number)
+print("Player round wins:", player_wins)
+print("Computer round wins:", computer_wins)
+print("Player cards remaining:", len(player_cards))
+print("Computer cards remaining:", len(computer_cards))
+
+
+# --------------------------------
+# 8. CREATE LINE CHART
+# --------------------------------
+
+rounds = list(range(len(player_history)))
+
+plt.plot(rounds, player_history, label="Player Cards")
+plt.plot(rounds, computer_history, label="Computer Cards")
+
+plt.title("War: Card Distribution Over Time")
+plt.xlabel("Round Number")
+plt.ylabel("Number of Cards")
+
+plt.legend()
+plt.grid(True)
+
+plt.show()
+

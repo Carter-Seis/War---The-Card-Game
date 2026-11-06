@@ -12,3 +12,14 @@ print("Shuffled Deck: ")
 for card in deck:
   print(card)
 
+#____________________________________________________
+#generate and shuffle a card deck
+import random
+
+spades = "\u2660"    # ♠
+hearts = "\u2665"    # ♥
+diamonds = "\u2666"  # ♦
+clubs = "\u2663"     # ♣
+
+print(f"Your hand: 10{spades} A{hearts} Q{diamonds} K{clubs}")
+

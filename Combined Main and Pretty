@@ -1,7 +1,7 @@
 # MAIN CODE - Visual improvements added from the Pretty version
 # main.py
 import matplotlib.pyplot as plt
-from shuffle_deck_OG import create_and_save_deck
+from shuffle_deck import create_and_save_deck
 
 # Step 1: Create and save the shuffled deck using File I/O
 create_and_save_deck()

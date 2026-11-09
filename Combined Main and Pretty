@@ -1,7 +1,7 @@
 # MAIN CODE - Visual improvements added from the Pretty version
 # main.py
 import matplotlib.pyplot as plt
-from shuffle_deck import create_and_save_deck
+from shuffle_deck_OG import create_and_save_deck
 
 # Step 1: Create and save the shuffled deck using File I/O
 create_and_save_deck()
@@ -15,7 +15,7 @@ print("================================")
 deck1 = []
 deck2 = []
 
-file = open("deck.txt", "r")
+file = open("deck.txt", "r", encoding="utf-8")
 lines = file.readlines()
 file.close()
 
@@ -51,7 +51,7 @@ losses = 0
 ties = 0
 
 # PRETTY ADDITION: Limit the game and track cards for the line chart
-max_rounds = 50
+max_rounds = 25
 your_history = [len(your_deck)]
 opponent_history = [len(opponent_deck)]
 
@@ -123,7 +123,7 @@ else:
     print("THE GAME ENDED IN A TIE!")
 
 if round_num == max_rounds:
-    print("50 ROUND LIMIT REACHED!")
+    print("25 ROUND LIMIT REACHED!")
 
 # Game Statistics (original variables preserved)
 print("\n---------- FINAL STATISTICS ----------")
@@ -145,4 +145,3 @@ plt.ylabel("Number of Cards")
 plt.legend()
 plt.grid(True)
 plt.show()
-

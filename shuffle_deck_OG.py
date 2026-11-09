@@ -1,0 +1,40 @@
+# shuffle_deck.py
+import random
+
+def create_and_save_deck():
+    # Build a simple deck using lists and loops
+    deck = []
+    suits = ["Hearts", "Diamonds", "Clubs", "Spades"]
+    
+    for suit in suits:
+        for value in range(2, 15):
+            if value == 11:
+                rank = "Jack"
+            elif value == 12:
+                rank = "Queen"
+            elif value == 13:
+                rank = "King"
+            elif value == 14:
+                rank = "Ace"
+            else:
+                rank = str(value)
+                
+            card_name = rank + " of " + suit
+            # Store as a simple list [card_name, value]
+            deck.append([card_name, value])
+            
+    # Shuffle the deck randomly
+    random.shuffle(deck)
+    
+    # FILE I/O: Open a file in write mode and save each card
+    file = open("deck.txt", "w")
+    for card in deck:
+        # Write card name and value separated by a comma
+        line = card[0] + "," + str(card[1]) + "\n"
+        file.write(line)
+    file.close()
+    
+    print("Deck has been shuffled and saved to deck.txt using File I/O!")
+
+if __name__ == "__main__":
+    create_and_save_deck()

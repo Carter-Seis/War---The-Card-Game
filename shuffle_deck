@@ -4,12 +4,7 @@ import random
 def create_and_save_deck():
     # Build a simple deck using lists and loops
     deck = []
-    spades = "\u2660"    # ♠
-    hearts = "\u2665"    # ♥
-    diamonds = "\u2666"  # ♦
-    clubs = "\u2663"     # ♣
-
-    suits = [hearts, diamonds, clubs, spades]
+    suits = ["Hearts", "Diamonds", "Clubs", "Spades"]
     
     for suit in suits:
         for value in range(2, 15):
@@ -24,22 +19,31 @@ def create_and_save_deck():
             else:
                 rank = str(value)
                 
-            card_name = rank + " " + suit
+            if suit == "Hearts":
+                symbol = "♡"
+            elif suit == "Diamonds":
+                symbol = "♢"
+            elif suit == "Clubs":
+                symbol = "♣"
+            else:
+                symbol = "♠"
+
+            card_name = rank + " " + symbol
+            # Store as a simple list [card_name, value]
             deck.append([card_name, value])
             
-    # Shuffle the deck
+    # Shuffle the deck randomly
     random.shuffle(deck)
     
     # FILE I/O: Open a file in write mode and save each card
-    # Also identifies what the unicode is so that we can actually write into file, found from stav and google
-    file = open("deck.txt", "w", encoding='utf-8')
+    file = open("deck.txt", "w", encoding="utf-8")
     for card in deck:
         # Write card name and value separated by a comma
-        line = card[0] + str(card[1]) + "\n"
+        line = card[0] + "," + str(card[1]) + "\n"
         file.write(line)
     file.close()
     
-    print("Deck has been shuffled and ready to play!")
+    print("Deck has been shuffled and saved!")
 
 if __name__ == "__main__":
     create_and_save_deck()

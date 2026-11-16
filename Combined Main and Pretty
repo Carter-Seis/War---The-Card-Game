@@ -1,3 +1,13 @@
+#Project Title: War - The Card Game 
+#Course: CPSC 118 Fundamentals of Computer Programming 
+#Instructor: Dr. O
+#Submission Date: 2026-11-23
+#Project Type: Group
+#Group Members:
+#    -Annika Duncan 
+#    -Carter Seis 
+#    -Cadencerose Holt
+#File Purpose: Main File 
 # MAIN CODE - Visual improvements added from the Pretty version
 # main.py
 import matplotlib.pyplot as plt

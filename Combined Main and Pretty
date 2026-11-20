@@ -110,13 +110,16 @@ while len(your_deck) > 0 and len(opponent_deck) > 0 and round_num <= max_rounds:
     print("Opponent cards: " + str(len(opponent_deck)))
     print("Total cards: " + str(len(your_deck) + len(opponent_deck)))
 
-    # PRETTY ADDITION: Stop automatically after 50 rounds
+    # PRETTY ADDITION: Stop automatically after 25 rounds
     if round_num == max_rounds or len(your_deck) == 0 or len(opponent_deck) == 0:
-        break
+    else:
+        print("hi")
+
 
     user_choice = input("\nPress Y to play the next round (or N to stop): ")
     if user_choice.lower() == "no" or user_choice.lower() == "n":
-        break
+    else:
+        print("hi")
 
     round_num = round_num + 1
 

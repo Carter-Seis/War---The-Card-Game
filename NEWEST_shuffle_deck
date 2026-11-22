@@ -1,3 +1,13 @@
+# Project Final: War the Card Game 
+# Course: CPSC 118Fundamentals of Programming
+# Instructor: Dr. O
+#Submission Date: 2026-11-22
+#Project Type: Group 
+#Group Members:
+#   -Cadencerose Holt
+#   -Annika Duncan 
+#   -Carter Seis 
+# File Purpose: 
 # shuffle_deck.py
 import random
 

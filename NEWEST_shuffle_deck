@@ -7,7 +7,7 @@
 #   -Cadencerose Holt
 #   -Annika Duncan 
 #   -Carter Seis 
-# File Purpose: 
+# File Purpose: Import file to the Main one
 # shuffle_deck.py
 import random
 
